@@ -1,7 +1,8 @@
-import { useRecipeStore } from "../store/recipeStore";
+import React from "react";
+import useRecipeStore from "./recipeStore";
 
 const RecipeList = () => {
-  const filteredRecipes = useRecipeStore((state) => state.filteredRecipes)
+  const filteredRecipes = useRecipeStore((state) => state.filteredRecipes);
 
   return (
     <div>
@@ -9,15 +10,16 @@ const RecipeList = () => {
       {filteredRecipes.length === 0 && <p>No recipes found.</p>}
 
       <ul>
-        {filteredRecipes.map((recipe, index) => (
-          <li key={index}>
+        {filteredRecipes.map((recipe) => (
+          <li key={recipe.id}>
             <h3>{recipe.title}</h3>
             <p>{recipe.description}</p>
           </li>
         ))}
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default RecipeList
+export default RecipeList;
+
