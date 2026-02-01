@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import useRecipeStore from "./recipeStore";
 
 const RecipeList = () => {
@@ -12,7 +12,10 @@ const RecipeList = () => {
       <ul>
         {filteredRecipes.map((recipe) => (
           <li key={recipe.id}>
-            <h3>{recipe.title}</h3>
+            {/* Wrap the title with Link to navigate to the recipe detail page */}
+            <h3>
+              <Link to={`/recipe/${recipe.id}`}>{recipe.title}</Link>
+            </h3>
             <p>{recipe.description}</p>
           </li>
         ))}
@@ -22,4 +25,3 @@ const RecipeList = () => {
 };
 
 export default RecipeList;
-
