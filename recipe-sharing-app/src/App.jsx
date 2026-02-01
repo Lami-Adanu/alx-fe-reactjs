@@ -1,43 +1,39 @@
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
-
-import RecipeList from "./components/RecipeList";
-import AddRecipeForm from "./components/AddRecipeForm";
-import RecipeDetails from "./components/RecipeDetails";
-import SearchBar from "./components/SearchBar";
-
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import SearchBar from './components/SearchBar';
+import RecipeList from './components/RecipeList';
+import RecipeDetails from './components/RecipeDetails';
+import AddRecipeForm from './components/AddRecipeForm';
+import EditRecipeForm from './components/EditRecipeForm';
+import FavoritesList from './components/FavoritesList';
+import RecommendationsList from './components/RecommendationsList';
+import useRecipeStore from './components/recipeStore';
 
 function App() {
+  const generateRecommendations = useRecipeStore(
+    (state) => state.generateRecommendations
+  );
+
   return (
-    <BrowserRouter>
+    <Router>
       <div>
-        <h1>Recipe Sharing App</h1>
+        <h1>Recipe App</h1>
         <SearchBar />
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <AddRecipeForm />
-                <RecipeList />
-              </>
-            }
-          />
+        {/* Favorites and Recommendations */}
+        <FavoritesList />
+        <button onClick={generateRecommendations}>Generate Recommendations</button>
+        <RecommendationsList />
 
-          <Route
-            path="/recipes/:id"
-            element={<RecipeDetailsWrapper />}
-          />
+        {/* Routing */}
+        <Routes>
+          <Route path="/" element={<RecipeList />} />
+          <Route path="/recipes/:id" element={<RecipeDetails />} />
+          <Route path="/add" element={<AddRecipeForm />} />
+          <Route path="/edit/:id" element={<EditRecipeForm />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
-
-const RecipeDetailsWrapper = () => {
-  const { id } = useParams();
-  return <RecipeDetails recipeId={Number(id)} />;
-};
 
 export default App;
